@@ -1,70 +1,112 @@
-# Adsha Goods - Porter-like Platform
+# Adsha Goods - Modern Porter-like Platform
 
-A comprehensive logistics platform with mobile apps for drivers and customers, and a web admin portal.
+A comprehensive logistics platform with **elegant, modern mobile apps** for drivers and customers, featuring state-of-the-art UI/UX design with gradients, card layouts, smooth transitions, and micro-interactions.
 
-## Architecture Overview
+![Customer App](https://github.com/user-attachments/assets/969f2251-b5dd-4ddf-be88-b472293e5ed0)
+
+## 🚀 Features
+
+### ✨ Modern UI/UX Design
+- **Custom gradients** and premium color schemes
+- **Card-based layouts** with smooth shadows and hover effects
+- **Smooth animations** and micro-interactions
+- **Responsive design** optimized for all device sizes (mobile-first)
+- **Custom branding** elements with elegant typography
+
+### 📱 Customer App (Orange Theme)
+- **Welcome Screen** - Beautiful onboarding with floating animations
+- **Authentication** - Modern sign-up/sign-in with form validation
+- **Home Dashboard** - Personalized dashboard with quick actions and stats
+- **Booking System** - Create and manage deliveries
+- **Live Tracking** - Real-time GPS tracking with maps integration
+- **Payment Integration** - Multiple payment options and history
+- **Order History** - Detailed order tracking and receipts
+- **Push Notifications** - Real-time updates and alerts
+- **Profile Management** - User profile and preferences
+
+![Customer Auth](https://github.com/user-attachments/assets/d42c0349-e5ae-4027-b770-9fa04c1bdc9f)
+
+![Customer Dashboard](https://github.com/user-attachments/assets/e39da8d8-b11b-464a-9a47-686c3a4a75c0)
+
+### 🚗 Driver App (Blue Theme)
+- **Welcome Screen** - Driver-focused onboarding experience
+- **Authentication** - Driver registration and verification
+- **Job Dashboard** - Available orders and earnings overview
+- **Order Management** - Accept/decline orders workflow
+- **GPS Navigation** - Turn-by-turn navigation and route optimization
+- **Earnings Tracking** - Real-time earnings and payment history
+- **Real-time Notifications** - Job alerts and updates
+- **Profile Management** - Driver profile and vehicle info
+
+![Driver Welcome](https://github.com/user-attachments/assets/c373506d-9675-4f1c-bcde-fe7b8f7bc11b)
+
+### 🖥️ Web Admin Portal
+- **User Management** - Manage customers and drivers
+- **Order Management** - Monitor and control all orders
+- **Analytics Dashboard** - Business insights and reporting
+- **Payment Management** - Transaction monitoring
+- **Settings & Configuration** - Platform configuration
+
+## 🏗️ Architecture Overview
 
 - **Backend**: Node.js REST API with PostgreSQL database
-- **Mobile Apps**: Angular/Ionic for iOS and Android
-  - Driver App: For drivers to manage deliveries
-  - Customer App: For customers to book and track orders
-- **Admin Web Portal**: Angular web application for administrators
+- **Mobile Apps**: Angular 18 + Ionic 8 for iOS and Android
+- **Admin Portal**: Angular web application
+- **UI Framework**: Modern Ionic components with custom styling
 
-## Features
+## 📋 Requirements
 
-### Core Features
-- Multi-role authentication (Driver, Customer, Admin)
-- Real-time order booking and management
-- Live GPS tracking
-- Payment processing
-- Push notifications
-- Order history and analytics
-- User profile management
-- Admin dashboard and controls
-
-### Security Features
-- JWT-based authentication
-- Role-based access control
-- API rate limiting
-- Data encryption
-- Input validation and sanitization
-
-## Quick Start
-
-### Prerequisites
-- Node.js 18+
+- Node.js 20+
+- Angular CLI 18+
+- Ionic CLI 8+
 - PostgreSQL 12+
-- Angular CLI
-- Ionic CLI
 
-### Installation
+## ⚡ Quick Start
 
-1. Clone the repository:
+### 1. Clone and Install
 ```bash
 git clone https://github.com/jeevamani/Adsha-Goods.git
 cd Adsha-Goods
-```
 
-2. Install all dependencies:
-```bash
+# Install global tools
+npm install -g @angular/cli @ionic/cli
+
+# Install all dependencies
 npm run install-all
 ```
 
-3. Set up the database:
+### 2. Database Setup
 ```bash
 cd database
 npm run setup
 ```
 
-4. Configure environment variables:
+### 3. Environment Configuration
 ```bash
 cp backend/.env.example backend/.env
 # Edit .env with your database and API configurations
 ```
 
-5. Start all services:
+### 4. Start Development Servers
+
+#### All Services (Recommended)
 ```bash
 npm start
+```
+
+#### Individual Services
+```bash
+# Backend API (Port 5000)
+npm run start-backend
+
+# Customer App (Port 4201)
+npm run start-mobile-customer
+
+# Driver App (Port 4202)
+npm run start-mobile-driver
+
+# Admin Portal (Port 4200)
+npm run start-admin
 ```
 
 ## Project Structure
