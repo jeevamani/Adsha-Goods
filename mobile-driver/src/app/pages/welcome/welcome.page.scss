@@ -1,0 +1,242 @@
+.welcome-content {
+  --background: var(--gradient-primary);
+}
+
+.welcome-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background decoration */
+.welcome-container::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -30%;
+  width: 200px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.welcome-container::after {
+  content: '';
+  position: absolute;
+  bottom: -20%;
+  left: -20%;
+  width: 150px;
+  height: 150px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+/* Hero Section */
+.hero-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-top: 60px;
+  z-index: 1;
+}
+
+.logo-container {
+  margin-bottom: 32px;
+  animation: float 3s ease-in-out infinite;
+}
+
+.logo-icon {
+  font-size: 80px;
+  color: white;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+}
+
+.hero-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: white;
+  margin: 0 0 16px 0;
+  line-height: 1.2;
+  animation: slideUp 1s ease-out;
+}
+
+.brand-name {
+  background: linear-gradient(45deg, #B3E5FC, #FFFFFF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: block;
+  margin-top: 8px;
+}
+
+.hero-subtitle {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 48px 0;
+  line-height: 1.4;
+  animation: slideUp 1s ease-out 0.2s both;
+}
+
+/* Features Grid */
+.features-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 32px 0;
+  z-index: 1;
+  animation: slideUp 1s ease-out 0.4s both;
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--border-radius-medium);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin: 0;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+}
+
+.feature-card ion-card-content {
+  text-align: center;
+  padding: 16px 12px;
+}
+
+.feature-icon {
+  font-size: 28px;
+  color: var(--ion-color-primary);
+  margin-bottom: 8px;
+}
+
+.feature-card h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 6px 0;
+}
+
+.feature-card p {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* CTA Section */
+.cta-section {
+  padding-bottom: 48px;
+  z-index: 1;
+  animation: slideUp 1s ease-out 0.6s both;
+}
+
+.cta-button {
+  --background: white;
+  --color: var(--ion-color-primary);
+  --border-radius: var(--border-radius-medium);
+  --padding-top: 18px;
+  --padding-bottom: 18px;
+  --box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  font-weight: 600;
+  font-size: 18px;
+  margin: 24px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.cta-button:hover::before {
+  left: 100%;
+}
+
+.login-text {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 16px;
+  margin: 16px 0 0 0;
+}
+
+.login-link {
+  color: white;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.login-link:hover {
+  opacity: 0.8;
+}
+
+/* Animations */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 28px;
+  }
+  
+  .hero-subtitle {
+    font-size: 16px;
+  }
+  
+  .features-grid {
+    gap: 8px;
+  }
+  
+  .feature-card ion-card-content {
+    padding: 12px 8px;
+  }
+  
+  .feature-card h3 {
+    font-size: 13px;
+  }
+  
+  .feature-card p {
+    font-size: 11px;
+  }
+  
+  .logo-icon {
+    font-size: 60px;
+  }
+}
