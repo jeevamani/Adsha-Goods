@@ -89,6 +89,57 @@ export class AuthService {
     );
   }
 
+  // OTP-based authentication methods
+  sendOTP(phone: string): Observable<{success: boolean, message: string, data?: any}> {
+    return this.http.post<{success: boolean, message: string, data?: any}>(`${environment.apiUrl}/auth/send-otp`, {
+      phone
+    }).pipe(
+      catchError(error => {
+        console.error('Send OTP error:', error);
+        return of({success: false, message: error.error?.message || 'Failed to send OTP'});
+      })
+    );
+  }
+
+  loginWithOTP(phone: string, otp: string): Observable<boolean> {
+    return this.http.post<AuthResponse>(`${environment.apiUrl}/auth/login-otp`, {
+      phone,
+      otp
+    }).pipe(
+      tap(response => {
+        if (response.success) {
+          this.setToken(response.data.accessToken);
+          this.setRefreshToken(response.data.refreshToken);
+          this.currentUserSubject.next(response.data.user);
+        }
+      }),
+      map(response => response.success),
+      catchError(() => of(false))
+    );
+  }
+
+  registerWithOTP(userData: {
+    phone: string;
+    otp: string;
+    firstName: string;
+    lastName: string;
+  }): Observable<boolean> {
+    return this.http.post<AuthResponse>(`${environment.apiUrl}/auth/register-otp`, {
+      ...userData,
+      role: 'driver'
+    }).pipe(
+      tap(response => {
+        if (response.success) {
+          this.setToken(response.data.accessToken);
+          this.setRefreshToken(response.data.refreshToken);
+          this.currentUserSubject.next(response.data.user);
+        }
+      }),
+      map(response => response.success),
+      catchError(() => of(false))
+    );
+  }
+
   logout(): Observable<boolean> {
     return this.http.post(`${environment.apiUrl}/auth/logout`, {}).pipe(
       tap(() => {

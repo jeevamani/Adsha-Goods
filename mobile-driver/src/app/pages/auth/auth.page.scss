@@ -94,3 +94,38 @@
   margin: 0.25rem 0 0.75rem 0;
   padding-left: 1rem;
 }
+
+.otp-section {
+  margin: 1rem 0;
+
+  .otp-button {
+    height: 45px;
+    --background: rgba(255, 255, 255, 0.15);
+    --color: white;
+    --border-radius: 12px;
+    --border-width: 1px;
+    --border-style: solid;
+    --border-color: rgba(255, 255, 255, 0.3);
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+
+    &:not([disabled]):hover {
+      --background: rgba(255, 255, 255, 0.25);
+    }
+
+    &[disabled] {
+      --opacity: 0.5;
+    }
+  }
+
+  .countdown-text {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+  }
+}
