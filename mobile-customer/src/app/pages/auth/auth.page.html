@@ -1,0 +1,126 @@
+<ion-content class="auth-content">
+  <div class="auth-container">
+    <!-- Header -->
+    <div class="header">
+      <ion-icon name="cube" class="logo"></ion-icon>
+      <h1>Adsha Goods</h1>
+      <p>Your reliable delivery partner</p>
+    </div>
+
+    <!-- Auth Mode Toggle -->
+    <ion-segment [(ngModel)]="isLogin" class="auth-segment">
+      <ion-segment-button [value]="true">
+        <ion-label>Sign In</ion-label>
+      </ion-segment-button>
+      <ion-segment-button [value]="false">
+        <ion-label>Sign Up</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <!-- Login Form -->
+    <form *ngIf="isLogin" [formGroup]="loginForm" (ngSubmit)="onLogin()" class="auth-form">
+      <ion-item class="form-item">
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input 
+          type="email" 
+          formControlName="email"
+          placeholder="Enter your email">
+        </ion-input>
+      </ion-item>
+      <div class="error-message" *ngIf="getErrorMessage(loginForm, 'email')">
+        {{ getErrorMessage(loginForm, 'email') }}
+      </div>
+
+      <ion-item class="form-item">
+        <ion-label position="stacked">Password</ion-label>
+        <ion-input 
+          type="password" 
+          formControlName="password"
+          placeholder="Enter your password">
+        </ion-input>
+      </ion-item>
+      <div class="error-message" *ngIf="getErrorMessage(loginForm, 'password')">
+        {{ getErrorMessage(loginForm, 'password') }}
+      </div>
+
+      <ion-button 
+        expand="block" 
+        type="submit" 
+        [disabled]="!loginForm.valid"
+        class="auth-button">
+        Sign In
+      </ion-button>
+    </form>
+
+    <!-- Register Form -->
+    <form *ngIf="!isLogin" [formGroup]="registerForm" (ngSubmit)="onRegister()" class="auth-form">
+      <ion-item class="form-item">
+        <ion-label position="stacked">First Name</ion-label>
+        <ion-input 
+          type="text" 
+          formControlName="firstName"
+          placeholder="Enter your first name">
+        </ion-input>
+      </ion-item>
+      <div class="error-message" *ngIf="getErrorMessage(registerForm, 'firstName')">
+        {{ getErrorMessage(registerForm, 'firstName') }}
+      </div>
+
+      <ion-item class="form-item">
+        <ion-label position="stacked">Last Name</ion-label>
+        <ion-input 
+          type="text" 
+          formControlName="lastName"
+          placeholder="Enter your last name">
+        </ion-input>
+      </ion-item>
+      <div class="error-message" *ngIf="getErrorMessage(registerForm, 'lastName')">
+        {{ getErrorMessage(registerForm, 'lastName') }}
+      </div>
+
+      <ion-item class="form-item">
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input 
+          type="email" 
+          formControlName="email"
+          placeholder="Enter your email">
+        </ion-input>
+      </ion-item>
+      <div class="error-message" *ngIf="getErrorMessage(registerForm, 'email')">
+        {{ getErrorMessage(registerForm, 'email') }}
+      </div>
+
+      <ion-item class="form-item">
+        <ion-label position="stacked">Phone</ion-label>
+        <ion-input 
+          type="tel" 
+          formControlName="phone"
+          placeholder="Enter your phone number">
+        </ion-input>
+      </ion-item>
+      <div class="error-message" *ngIf="getErrorMessage(registerForm, 'phone')">
+        {{ getErrorMessage(registerForm, 'phone') }}
+      </div>
+
+      <ion-item class="form-item">
+        <ion-label position="stacked">Password</ion-label>
+        <ion-input 
+          type="password" 
+          formControlName="password"
+          placeholder="Create a password">
+        </ion-input>
+      </ion-item>
+      <div class="error-message" *ngIf="getErrorMessage(registerForm, 'password')">
+        {{ getErrorMessage(registerForm, 'password') }}
+      </div>
+
+      <ion-button 
+        expand="block" 
+        type="submit" 
+        [disabled]="!registerForm.valid"
+        class="auth-button">
+        Sign Up
+      </ion-button>
+    </form>
+  </div>
+</ion-content>
