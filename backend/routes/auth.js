@@ -6,8 +6,12 @@ const crypto = require('crypto');
 const User = require('../models/User');
 const { generateTokens, verifyRefreshToken, authenticateToken } = require('../middleware/auth');
 const { ApiError } = require('../middleware/errorHandler');
+const { OTPService, sendSMS } = require('../utils/otp');
 
 const router = express.Router();
+
+// Initialize OTP service
+const otpService = new OTPService();
 
 // Validation schemas
 const registerSchema = Joi.object({
@@ -39,6 +43,181 @@ const resetPasswordSchema = Joi.object({
 const changePasswordSchema = Joi.object({
   currentPassword: Joi.string().required(),
   newPassword: Joi.string().min(8).pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])')).required()
+});
+
+// OTP validation schemas
+const sendOTPSchema = Joi.object({
+  phone: Joi.string().pattern(/^\+?[1-9]\d{1,14}$/).required()
+});
+
+const verifyOTPLoginSchema = Joi.object({
+  phone: Joi.string().pattern(/^\+?[1-9]\d{1,14}$/).required(),
+  otp: Joi.string().length(6).pattern(/^\d+$/).required()
+});
+
+const verifyOTPRegisterSchema = Joi.object({
+  phone: Joi.string().pattern(/^\+?[1-9]\d{1,14}$/).required(),
+  otp: Joi.string().length(6).pattern(/^\d+$/).required(),
+  firstName: Joi.string().min(2).max(50).required(),
+  lastName: Joi.string().min(2).max(50).required(),
+  role: Joi.string().valid('customer', 'driver').required()
+});
+
+// Send OTP for login or registration
+router.post('/send-otp', async (req, res, next) => {
+  try {
+    const { error, value } = sendOTPSchema.validate(req.body);
+    if (error) {
+      throw new ApiError(error.details[0].message, 400);
+    }
+
+    const { phone } = value;
+
+    // Check if there's already an active OTP for this phone
+    if (otpService.hasActiveOTP(phone)) {
+      throw new ApiError('OTP already sent. Please wait before requesting a new one.', 429);
+    }
+
+    // Generate OTP
+    const otp = otpService.generateOTP();
+    
+    // Store OTP
+    otpService.storeOTP(phone, otp);
+
+    // Send SMS (for now just log it)
+    await sendSMS(phone, `Your Adsha Goods verification code is: ${otp}. Valid for 5 minutes.`);
+
+    res.json({
+      success: true,
+      message: 'OTP sent successfully',
+      data: {
+        phone,
+        // In development, return OTP for testing (remove in production)
+        otp: process.env.NODE_ENV === 'development' ? otp : undefined
+      }
+    });
+
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Login with OTP
+router.post('/login-otp', async (req, res, next) => {
+  try {
+    const { error, value } = verifyOTPLoginSchema.validate(req.body);
+    if (error) {
+      throw new ApiError(error.details[0].message, 400);
+    }
+
+    const { phone, otp } = value;
+
+    // Verify OTP
+    const isOTPValid = otpService.verifyOTP(phone, otp);
+    if (!isOTPValid) {
+      throw new ApiError('Invalid or expired OTP', 400);
+    }
+
+    // Find user by phone
+    const user = await User.findByPhone(phone);
+    if (!user) {
+      throw new ApiError('User not found. Please register first.', 404);
+    }
+
+    // Check if user is active
+    if (!user.is_active) {
+      throw new ApiError('Account is inactive. Please contact support.', 401);
+    }
+
+    // Generate tokens
+    const tokens = generateTokens({
+      userId: user.id,
+      email: user.email,
+      role: user.role
+    });
+
+    res.json({
+      success: true,
+      message: 'Login successful',
+      data: {
+        user: {
+          id: user.id,
+          email: user.email,
+          role: user.role,
+          firstName: user.first_name,
+          lastName: user.last_name,
+          phone: user.phone,
+          isVerified: user.is_verified
+        },
+        tokens
+      }
+    });
+
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Register with OTP
+router.post('/register-otp', async (req, res, next) => {
+  try {
+    const { error, value } = verifyOTPRegisterSchema.validate(req.body);
+    if (error) {
+      throw new ApiError(error.details[0].message, 400);
+    }
+
+    const { phone, otp, firstName, lastName, role } = value;
+
+    // Verify OTP
+    const isOTPValid = otpService.verifyOTP(phone, otp);
+    if (!isOTPValid) {
+      throw new ApiError('Invalid or expired OTP', 400);
+    }
+
+    // Check if user already exists with this phone
+    const existingUser = await User.findByPhone(phone);
+    if (existingUser) {
+      throw new ApiError('User already exists with this phone number', 409);
+    }
+
+    // Create new user with phone as email for now (can be updated later)
+    const user = await User.create({
+      email: `${phone}@temp.phone`, // Temporary email, can be updated later
+      password: 'temp_password', // Temporary password since we're using OTP
+      role,
+      firstName,
+      lastName,
+      phone,
+      isVerified: true // Phone is verified via OTP
+    });
+
+    // Generate tokens
+    const tokens = generateTokens({
+      userId: user.id,
+      email: user.email,
+      role: user.role
+    });
+
+    res.status(201).json({
+      success: true,
+      message: 'User registered successfully',
+      data: {
+        user: {
+          id: user.id,
+          email: user.email,
+          role: user.role,
+          firstName: user.first_name,
+          lastName: user.last_name,
+          phone: user.phone,
+          isVerified: user.is_verified
+        },
+        tokens
+      }
+    });
+
+  } catch (error) {
+    next(error);
+  }
 });
 
 // Register new user

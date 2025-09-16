@@ -20,33 +20,50 @@
     <!-- Login Form -->
     <form *ngIf="isLogin" [formGroup]="loginForm" (ngSubmit)="onLogin()" class="auth-form">
       <ion-item class="form-item">
-        <ion-label position="stacked">Email</ion-label>
+        <ion-label position="stacked">Phone Number</ion-label>
         <ion-input 
-          type="email" 
-          formControlName="email"
-          placeholder="Enter your email">
+          type="tel" 
+          formControlName="phone"
+          placeholder="Enter your phone number (+1234567890)">
         </ion-input>
       </ion-item>
-      <div class="error-message" *ngIf="getErrorMessage(loginForm, 'email')">
-        {{ getErrorMessage(loginForm, 'email') }}
+      <div class="error-message" *ngIf="getErrorMessage(loginForm, 'phone')">
+        {{ getErrorMessage(loginForm, 'phone') }}
       </div>
 
-      <ion-item class="form-item">
-        <ion-label position="stacked">Password</ion-label>
+      <div class="otp-section">
+        <ion-button 
+          *ngIf="!otpSent || countdown <= 0"
+          expand="block" 
+          fill="outline"
+          [disabled]="!loginForm.get('phone')?.valid"
+          (click)="sendOTP()"
+          class="otp-button">
+          {{ otpSent && countdown <= 0 ? 'Resend OTP' : 'Send OTP' }}
+        </ion-button>
+        
+        <div *ngIf="otpSent && countdown > 0" class="countdown-text">
+          Resend OTP in {{ countdown }}s
+        </div>
+      </div>
+
+      <ion-item *ngIf="otpSent" class="form-item">
+        <ion-label position="stacked">Verification Code</ion-label>
         <ion-input 
-          type="password" 
-          formControlName="password"
-          placeholder="Enter your password">
+          type="number" 
+          formControlName="otp"
+          placeholder="Enter 6-digit code"
+          maxlength="6">
         </ion-input>
       </ion-item>
-      <div class="error-message" *ngIf="getErrorMessage(loginForm, 'password')">
-        {{ getErrorMessage(loginForm, 'password') }}
+      <div class="error-message" *ngIf="otpSent && getErrorMessage(loginForm, 'otp')">
+        {{ getErrorMessage(loginForm, 'otp') }}
       </div>
 
       <ion-button 
         expand="block" 
         type="submit" 
-        [disabled]="!loginForm.valid"
+        [disabled]="!loginForm.valid || !otpSent"
         class="auth-button">
         Sign In
       </ion-button>
@@ -79,45 +96,50 @@
       </div>
 
       <ion-item class="form-item">
-        <ion-label position="stacked">Email</ion-label>
-        <ion-input 
-          type="email" 
-          formControlName="email"
-          placeholder="Enter your email">
-        </ion-input>
-      </ion-item>
-      <div class="error-message" *ngIf="getErrorMessage(registerForm, 'email')">
-        {{ getErrorMessage(registerForm, 'email') }}
-      </div>
-
-      <ion-item class="form-item">
-        <ion-label position="stacked">Phone</ion-label>
+        <ion-label position="stacked">Phone Number</ion-label>
         <ion-input 
           type="tel" 
           formControlName="phone"
-          placeholder="Enter your phone number">
+          placeholder="Enter your phone number (+1234567890)">
         </ion-input>
       </ion-item>
       <div class="error-message" *ngIf="getErrorMessage(registerForm, 'phone')">
         {{ getErrorMessage(registerForm, 'phone') }}
       </div>
 
-      <ion-item class="form-item">
-        <ion-label position="stacked">Password</ion-label>
+      <div class="otp-section">
+        <ion-button 
+          *ngIf="!otpSent || countdown <= 0"
+          expand="block" 
+          fill="outline"
+          [disabled]="!registerForm.get('phone')?.valid"
+          (click)="sendOTP()"
+          class="otp-button">
+          {{ otpSent && countdown <= 0 ? 'Resend OTP' : 'Send OTP' }}
+        </ion-button>
+        
+        <div *ngIf="otpSent && countdown > 0" class="countdown-text">
+          Resend OTP in {{ countdown }}s
+        </div>
+      </div>
+
+      <ion-item *ngIf="otpSent" class="form-item">
+        <ion-label position="stacked">Verification Code</ion-label>
         <ion-input 
-          type="password" 
-          formControlName="password"
-          placeholder="Create a password">
+          type="number" 
+          formControlName="otp"
+          placeholder="Enter 6-digit code"
+          maxlength="6">
         </ion-input>
       </ion-item>
-      <div class="error-message" *ngIf="getErrorMessage(registerForm, 'password')">
-        {{ getErrorMessage(registerForm, 'password') }}
+      <div class="error-message" *ngIf="otpSent && getErrorMessage(registerForm, 'otp')">
+        {{ getErrorMessage(registerForm, 'otp') }}
       </div>
 
       <ion-button 
         expand="block" 
         type="submit" 
-        [disabled]="!registerForm.valid"
+        [disabled]="!registerForm.valid || !otpSent"
         class="auth-button">
         Sign Up
       </ion-button>

@@ -25,6 +25,12 @@ class User {
     return result.rows[0];
   }
 
+  static async findByPhone(phone) {
+    const query = 'SELECT * FROM users WHERE phone = $1';
+    const result = await db.query(query, [phone]);
+    return result.rows[0];
+  }
+
   static async findById(id) {
     const query = `
       SELECT u.*, up.* 
