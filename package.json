@@ -1,0 +1,38 @@
+{
+  "name": "adsha-goods-porter",
+  "version": "1.0.0",
+  "description": "Porter-like platform with mobile apps and web admin",
+  "main": "backend/server.js",
+  "scripts": {
+    "install-all": "npm run install-backend && npm run install-admin && npm run install-mobile-apps",
+    "install-backend": "cd backend && npm install",
+    "install-admin": "cd admin-web && npm install",
+    "install-mobile-apps": "cd mobile-driver && npm install && cd ../mobile-customer && npm install",
+    "start": "concurrently \"npm run start-backend\" \"npm run start-admin\" \"npm run start-mobile-driver\" \"npm run start-mobile-customer\"",
+    "start-backend": "cd backend && npm start",
+    "start-admin": "cd admin-web && npm start",
+    "start-mobile-driver": "cd mobile-driver && npm start",
+    "start-mobile-customer": "cd mobile-customer && npm start",
+    "test": "npm run test-backend && npm run test-admin && npm run test-mobile",
+    "test-backend": "cd backend && npm test",
+    "test-admin": "cd admin-web && npm test",
+    "test-mobile": "cd mobile-driver && npm test && cd ../mobile-customer && npm test",
+    "build": "npm run build-backend && npm run build-admin && npm run build-mobile",
+    "build-backend": "cd backend && npm run build",
+    "build-admin": "cd admin-web && npm run build",
+    "build-mobile": "cd mobile-driver && npm run build && cd ../mobile-customer && npm run build"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": [
+    "porter",
+    "logistics",
+    "mobile",
+    "angular",
+    "nodejs",
+    "postgresql"
+  ],
+  "author": "Adsha Goods Team",
+  "license": "MIT"
+}
