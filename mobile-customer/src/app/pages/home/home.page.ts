@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { AuthService, User } from '../../services/auth.service';
 
 @Component({
@@ -16,4 +17,5 @@ export class HomePage implements OnInit {
       this.user = user;
     });
   }
+
 }

@@ -1,0 +1,98 @@
+/* Ionic CSS Import */
+@import '@ionic/angular/css/core.css';
+@import '@ionic/angular/css/normalize.css';
+@import '@ionic/angular/css/structure.css';
+@import '@ionic/angular/css/typography.css';
+@import '@ionic/angular/css/display.css';
+@import '@ionic/angular/css/padding.css';
+@import '@ionic/angular/css/float-elements.css';
+@import '@ionic/angular/css/text-alignment.css';
+@import '@ionic/angular/css/text-transformation.css';
+@import '@ionic/angular/css/flex-utils.css';
+
+/* Custom Theme Variables */
+:root {
+  /* Primary Brand Color - Orange */
+  --ion-color-primary: #FF5722;
+  --ion-color-primary-rgb: 255, 87, 34;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #e64a19;
+  --ion-color-primary-tint: #ff6838;
+
+  /* Secondary Brand Color */
+  --ion-color-secondary: #FF9800;
+  --ion-color-secondary-rgb: 255, 152, 0;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #e68900;
+  --ion-color-secondary-tint: #ffa21a;
+
+  /* Background Colors */
+  --ion-background-color: #f8f9fa;
+  --ion-background-color-rgb: 248, 249, 250;
+  --ion-text-color: #121212;
+  --ion-text-color-rgb: 18, 18, 18;
+
+  /* Custom gradients */
+  --gradient-primary: linear-gradient(135deg, #FF5722 0%, #E64A19 100%);
+  --gradient-secondary: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+  --gradient-accent: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%);
+
+  /* Card shadows */
+  --card-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  --card-shadow-hover: 0 12px 40px rgba(0,0,0,0.15);
+  
+  /* Border radius */
+  --border-radius-large: 16px;
+  --border-radius-medium: 12px;
+  --border-radius-small: 8px;
+}
+
+/* Global Styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Modern card style */
+.modern-card {
+  background: white;
+  border-radius: var(--border-radius-large);
+  box-shadow: var(--card-shadow);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modern-card:hover {
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-2px);
+}
+
+/* Gradient buttons */
+.gradient-button {
+  background: var(--gradient-primary);
+  border: none;
+  border-radius: var(--border-radius-medium);
+  color: white;
+  padding: 16px 24px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.gradient-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(255, 87, 34, 0.3);
+}
+
+/* Smooth transitions */
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
