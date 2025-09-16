@@ -1,0 +1,49 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="profile-content" *ngIf="user">
+    <div class="profile-header">
+      <ion-avatar class="profile-avatar">
+        <ion-icon name="person" *ngIf="!user.profileImage"></ion-icon>
+      </ion-avatar>
+      <h2>{{ user.firstName }} {{ user.lastName }}</h2>
+      <p>{{ user.email }}</p>
+      <p>{{ user.phone }}</p>
+    </div>
+
+    <ion-list>
+      <ion-item button>
+        <ion-icon name="person" slot="start"></ion-icon>
+        <ion-label>Edit Profile</ion-label>
+        <ion-icon name="chevron-forward" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-item button>
+        <ion-icon name="card" slot="start"></ion-icon>
+        <ion-label>Payment Methods</ion-label>
+        <ion-icon name="chevron-forward" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-item button>
+        <ion-icon name="notifications" slot="start"></ion-icon>
+        <ion-label>Notification Settings</ion-label>
+        <ion-icon name="chevron-forward" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-item button>
+        <ion-icon name="help-circle" slot="start"></ion-icon>
+        <ion-label>Help & Support</ion-label>
+        <ion-icon name="chevron-forward" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-item button (click)="logout()">
+        <ion-icon name="log-out" slot="start" color="danger"></ion-icon>
+        <ion-label color="danger">Logout</ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>
